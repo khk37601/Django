@@ -106,3 +106,19 @@ ORM은 Oject-Relational Mapping의 약자로 객체와 관계형데이터베이�
 
 ```
 
+#### Django 설치
+* os는 Window 기준입니다.
+```
+>> mkdir Django_project # 디렉토리 생성
+
+>> cd Django_project # 디렉토리 이동
+
+>> python -m venv myvenv 
+
+>> python -m pip install --upgarde pip # pip 업데이트
+
+>> pip install django = 버전 # Django 설치
+```
+
+
+
