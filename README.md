@@ -41,5 +41,11 @@ Model - view - controller 패턴 Model은 데이터, View는 사용자 인터페
 
 각 개발자가 각자 분야에만 집중해서 개발의 효율성을 증대 시키는 패턴입니다.
 
-Djnago도 역시 MVC 패턴을 그대로 이용하고 있습니다. 단지 용어만 다르게 MTV(Model- Template - controller )를 사용합니다. 
-   
+Djnago도 역시 MVC 패턴을 그대로 이용하고 있습니다. 단지 용어만 다르게 ```MTV(Model- Template - controller )```를 사용합니다. 
+
+![](https://github.com/khk37601/Django/blob/master/Django_%EC%9D%B4%EB%AF%B8%EC%A7%80/Django_API.PNG)
+
+클라이언트의 request가 오면 url을 분석하여 뷰에 처리합니다. 뷰에 데이터베이스 처리가 필요한 경우 모델을 통해서 
+처리하고 결과를 반환하여 템플릿과 함께 html파일 생성 후 뷰에서 생성된 html파일을 클라이언트에게 전송하는 방식입니다.
+
+
