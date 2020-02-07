@@ -120,5 +120,12 @@ ORM은 Oject-Relational Mapping의 약자로 객체와 관계형데이터베이�
 >> pip install django = 버전 # Django 설치
 ```
 
+#### Django Rest FrameWork
+```
+Django와 DRF (Django Rest Framework)는 사용되는 방식이 다릅니다. 
+웹 응용 프로그램을 만들려면 django가 도움이되며 API 만 만들려면 DRF가 유용 할 수 있습니다.
+예, django에서도 API 종류의 구조를 만들 수 있지만 DRF는 serializer, 필터링 및 OAuth 지원 또는 Markdown, PyYAML, Markdown, YAML, XML 컨텐츠유형 지원 등을 쉽게 사용할 수 있도록 더 많은 기능을 제공합니다. 
+따라서 기본적으로 API를 만들려면 DRF를 사용해야한다고 말할 수 있습니다. 웹 애플리케이션을 만들어야한다면 장고를 사용해야합니다.
 
-
+```
+제가 생각하기에는 재사용성을 높이기 위해서 사용하는거 같습니다.
