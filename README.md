@@ -160,7 +160,7 @@ Rest기반으로 서비스 API를 구현한 것입니다.
 ##### djangorestfamework 설치.
 
 ```
-pip install djangorestfamework #설치
+>> pip install djangorestfamework #설치
 ```
 
 * django에 reest_frame 추가.
@@ -171,7 +171,7 @@ pip install djangorestfamework #설치
 * MariaDB 연결
 
 ```
-pip install mysqlclient
+>> pip install mysqlclient
  
 === 오류생기는 경우 ===
 
@@ -186,5 +186,28 @@ pip insatll 파일위치\~.whl
 
 
 
+* Serializers 생성.
+데이터를 Json으로 변환 하여 통신하게 해주는 역할을 합니다.
+
+![](https://github.com/khk37601/Django/blob/master/Django_%EC%9D%B4%EB%AF%B8%EC%A7%80/restfamework_%EB%AA%A8%EB%8D%B8.PNG)
 
 
+* urls 매핑
+urls.py rest_framework에 router를 이용하여 등록.
+
+![](https://github.com/khk37601/Django/blob/master/Django_%EC%9D%B4%EB%AF%B8%EC%A7%80/restfamework_urls.PNG)
+
+* 어플리케이션 실행.
+```
+>> python manage.py runserver
+```
+![](https://github.com/khk37601/Django/blob/master/Django_%EC%9D%B4%EB%AF%B8%EC%A7%80/restframewotk%EB%82%B4%EC%9A%A9%EC%B6%94%EA%B0%80PNG.PNG)
+
+```
+>> pip install requests
+
+data = (request.get('localhiost/premier2')).json() 
+하여서 Server와 클라이언트의 데이터를 통신 할 수 있게 됩니다.
+```
+프론트와 백엔드를 나눠서 개발이 가능해집니다.
+![](https://github.com/khk37601/Django/blob/master/Django_%EC%9D%B4%EB%AF%B8%EC%A7%80/restframework_%EC%95%84%ED%82%A4%ED%85%8D%ED%8A%B8.PNG)
