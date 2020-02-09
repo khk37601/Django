@@ -157,6 +157,34 @@ Rest기반으로 서비스 API를 구현한 것입니다.
 -Rest API 디자인 규칙 -책 참고.
 
 
+##### djangorestfamework 설치.
+
+```
+pip install djangorestfamework #설치
+```
+
+* django에 reest_frame 추가.
+
+![](https://github.com/khk37601/Django/blob/master/Django_%EC%9D%B4%EB%AF%B8%EC%A7%80/resframwork_setting%EC%84%A4%EC%A0%95.PNG)
+
+
+* MariaDB 연결
+
+```
+pip install mysqlclient
+ 
+=== 오류생기는 경우 ===
+
+https://www.lfd.uci.edu/~gohlke/pythonlibs/#mysqlclient 에서 본인의 파이썬 버전에 맞는 whl 파일을 다운로드 받습니다.
+
+pip insatll 파일위치\~.whl
+
+```
+* Django는 기본적으로 sqllite3를 제공하기 때문에 아래와 같이 변경해야 합니다. 
+
+![](https://github.com/khk37601/Django/blob/master/Django_%EC%9D%B4%EB%AF%B8%EC%A7%80/mariaDB%EC%97%B0%EA%B2%B0.PNG)
+
+
 
 
 
