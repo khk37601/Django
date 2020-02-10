@@ -210,4 +210,21 @@ data = (request.get('localhiost/premier2')).json()
 하여서 Server와 클라이언트의 데이터를 통신 할 수 있게 됩니다.
 ```
 프론트와 백엔드를 나눠서 개발이 가능해집니다.
-![](https://github.com/khk37601/Django/blob/master/Django_%EC%9D%B4%EB%AF%B8%EC%A7%80/restframework_%EC%95%84%ED%82%A4%ED%85%8D%ED%8A%B8.PNG)
+
+<img src="https://github.com/khk37601/Django/blob/master/Django_%EC%9D%B4%EB%AF%B8%EC%A7%80/restframework_%EC%95%84%ED%82%A4%ED%85%8D%ED%8A%B8.PNG" width="60%">
+
+--------------------------------------------------------------------------------------------------------------------------
+
+#### 검색화면.
+<img src="https://github.com/khk37601/Django/blob/master/Django_%EC%9D%B4%EB%AF%B8%EC%A7%80/Django_project_%EB%A9%94%EC%9D%B8.PNG" width="50%">
+
+#### 검색된 리그 순위정보와 선수정보.
+<img src="https://github.com/khk37601/Django/blob/master/Django_%EC%9D%B4%EB%AF%B8%EC%A7%80/%EA%B2%80%EC%83%89%EA%B2%B0%EA%B3%BC.PNG" width="50%">
+
+#### 회원가입.
+<img src="https://github.com/khk37601/Django/blob/master/Django_%EC%9D%B4%EB%AF%B8%EC%A7%80/%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85.PNG" width="40%" >
+
+
+===== 프론트와 백엔드을 분리하여 개발 진행.. 하지만 Setting문제 생겨 해결 하고 있습니다. ======
+
+
