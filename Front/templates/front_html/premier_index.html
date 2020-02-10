@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+    <script src="https://unpkg.com/vue"></script>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+</head>
+<body>
+
+
+    <nav class="navbar navbar-default">
+      <div class="container-fluid"/>
+            <a class="navbar-brand" href="#">
+            <img alt="Brand" src="...">
+          </a>
+    </nav>
+
+
+    <div class="container">
+		<div class="col-lg-4 "></div>
+		<div class="col-lg-4">
+			<div class="jumbotron jumbotron-fluid" style="padding-top: 50px">
+
+                <form method="get" action="Search" class="sign-up-form">
+                  {%csrf_token%}
+                     <div class="form-group">
+                        <label >프리미어 리그</label>
+                        <input class="form-control" id="user_date" maxlength="15"
+                               name="user_date" type="text" placeholder="#리버풀" />
+                    </div>
+
+                    <input type="submit" class="save btn btn-success" value="검색">
+                    <a href="" > 삭제 </a>
+                </form>
+
+
+            </div>
+                    <div lass="form-group">
+                        {% if detail_team %}
+                        <ul>순위     : {{detail_team.rank}}</ul>
+                        <ul>팀 이름  : {{detail_team.team_name}}</ul>
+                        <ul>승점     : {{detail_team.winning}}</ul>
+                        {% endif %}
+                    </div>
+
+        </div>
+
+    </div>
+
+
+</body>
+</html>
+
+
+
+
