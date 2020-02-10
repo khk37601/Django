@@ -1,0 +1,65 @@
+{% if message %}
+ <script>
+     alert('{{message}}')
+ </script>
+{% endif %}
+
+{% if request.session.uid %}
+    <script>
+        window.location.assign('http://127.0.0.1:8000/')
+    </script>
+{% else %}
+
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+    <script src="https://unpkg.com/vue"></script>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+</head>
+<body>
+
+
+    <nav class="navbar navbar-default">
+      <div class="container-fluid"/>
+            <a class="navbar-brand" href="#">
+            <img alt="Brand" src="...">
+          </a>
+    </nav>
+
+
+    <div class="container">
+		<div class="col-lg-4 "></div>
+		<div class="col-lg-4">
+			<div class="jumbotron jumbotron-fluid" style="padding-top: 50px">
+
+                <form action ="post_sign" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="email">이메일</label>
+                        <input type="email" class="form-control" name="email" maxlength="120"  />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pwd">패스워드</label>
+                        <input class="form-control" name="pwd" maxlength="120" type="password"/>
+                    </div>
+
+                    <input type="submit" class="save btn btn-success" value="검색">
+
+                </form>
+
+		</div>
+            	</div>
+    </div>
+
+
+</body>
+</html>
+{% endif %}
+
+
+

@@ -1,0 +1,297 @@
+{% if message %}
+ <script>
+     alert('{{message}}')
+ </script>
+{% endif %}
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+    <script src="https://unpkg.com/vue"></script>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+    <script>
+
+
+        var check_number2  = ""
+        var check_d = ""
+
+        $(document).ready(function()
+        {
+
+                 $("#success").hide()
+                 $("#danger").hide()
+
+                 $("#alert-success").hide()
+                 $("#alert-danger").hide()
+
+                 $("#success_s").hide()
+                 $("#failed").hide()
+
+
+                 $("#check_pwd").keyup(function()
+                 {
+                       var pwd1 = $("#pwd").val();
+                       var pwd2 = $("#check_pwd").val();
+                       if (pwd1 != "" || pwd2 != "")
+                        {
+                            if (pwd1 == pwd2)
+                            {
+                                $("#alert-success").show();
+                                $("#alert-danger").hide();
+
+                            }else{
+                                $("#alert-success").hide();
+                                $("#alert-danger").show();
+
+                            }
+                        }else {
+                            $("#alert-success").hide();
+                            $("#alert-danger").show();
+
+
+                        }
+
+                 });
+
+
+                  $("#duplicate_check").click(function()
+                   {
+
+                        var email = $('input[name=email]').val()
+                        //빈문자열 체크, [],{} 다 체크. 자료형에 상관없이 체크
+                       if (email == "" || email == null || email == undefined
+                            || ( email != null && typeof email == "object" && !Object.keys(email).length ))
+                       {
+                            alert("이메일을 입력하세요.")
+                       }
+                       else
+                       {
+                           $.ajax({
+
+                                  url : 'email_duplicate_check',
+                                  data: {'email':email, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                                  dataType : "json",
+
+                                   success:function(data)
+                                   {
+                                        check_d = data.check
+                                        if (check_d)
+                                        {
+                                            $("#success_s").show()
+                                            $("#failed").hide()
+                                        }else{
+
+                                            $("#success_s").hide()
+                                            $("#failed").show()
+                                        }
+                                   }
+                            })
+
+                       }
+                   });
+
+
+
+
+                $("#btn").click(function()
+                {
+                   var email = $('input[name=email]').val()
+                    //빈문자열 체크, [],{} 다 체크. 자료형에 상관없이 체크
+                   if (email == "" || email == null || email == undefined
+                        || ( email != null && typeof email == "object" && !Object.keys(email).length ))
+                   {
+                        alert("이메일을 입력하세요.")
+                   }
+                   else
+                   {
+                       $.ajax({
+
+                            url : 'check_email',
+                            data: {'email':email, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                            dataType : "json",
+
+                            success:function(data)
+                            {
+                                $("#authent").keyup(function()
+                                {
+
+                                    var check_number = $("#authent").val();
+                                    check_number2 = data.check_number
+                                    if (check_number == check_number2)
+                                    {
+                                          $("#success").show();
+                                          $("#danger").hide();
+                                          return true
+                                    }else{
+                                          $("#success").hide();
+                                          $("#danger").show();
+
+                                    }
+
+                                });
+                            }
+                       })
+                    }//end else
+
+                });
+        });
+
+
+
+        //유효성 검사
+        function check()
+        {
+            var email = document.form.email.value
+            var kickname = document.form.kickname.value
+            var pwd = document.form.pwd.value
+            var check_pwd= document.form.check_pwd.value
+            var authent = document.form.authent.value
+
+
+            if (!check_d)
+            {
+                return false;
+            }
+
+            if (email == "" || email == null || email == undefined
+                        || ( email != null && typeof email == "object" && !Object.keys(email).length ))
+            {
+                    alert("이메일을 입력해주세요")
+                    document.form.email.focus()
+                    document.form.email.select()
+                    return false;
+
+            }else if(kickname == "" || kickname == null || kickname == undefined) {
+
+                    alert("닉네임을 입력해주세요")
+                    document.form.kickname.focus()
+                    document.form.kickname.select()
+                    return false;
+
+            }else if(pwd == "" || pwd == null || pwd == undefined) {
+
+                    alert("패스워드을 입력해주세요")
+                    document.form.pwd.focus()
+                    document.form.pwd.select()
+                    return false;
+
+            }else if(check_pwd == "" || check_pwd == null || check_pwd == undefined) {
+
+                    alert("재확인 패스워드를 입력해주세요")
+                    document.form.check_pwd.focus()
+                    document.form.check_pwd.select()
+                    return false;
+
+            }else if(authent == "" || authent == null || authent == undefined) {
+
+                    alert("인증 해주세요")
+                    document.form.authent.focus()
+                    document.form.authent.select()
+                    return false;
+
+            }else if(pwd != check_pwd) {
+
+                    alert("패스워드를 일치 해주세요.")
+                    document.form.check_pwd.focus()
+                    document.form.check_pwd.select()
+                    return false;
+
+            }else if(authent != check_number2) {
+
+                    alert("인증버호를 일치 해주세요.")
+                    document.form.authent.focus()
+                    document.form.authent.select()
+                    return false;
+
+            }
+
+
+            document.form.submit()
+
+        }
+
+    </script>
+
+    <nav class="navbar navbar-default">
+      <div class="container-fluid"/>
+            <a class="navbar-brand" href="#">
+            <img alt="Brand" src="...">
+          </a>
+          <ul class="nav navbar-nav navbar-right">
+            {% if request.session.uid %}
+                    <ul><a >{{request.session.name}}님.</a></ul>
+
+                     <ul><a href= "{% url 'logout'%}">로그아웃</a></ul>
+            {% endif %}
+          </ul>
+    </nav>
+
+
+    <div class="container">
+		<div class="col-lg-4 "></div>
+		<div class="col-lg-4">
+			<div class="jumbotron jumbotron-fluid" style="width: 350px">
+
+                <form name="form" action ="post_signup" method="post" onsubmit="return check()">
+                    {% csrf_token %}
+
+                    <div class="form-group">
+                        <label for="email">이메일</label>
+                        <input type="email" class="form-control" name="email" id="email" maxlength="30" style="width: 210px"/>
+                         <button type="button" class="save btn btn-success" id="duplicate_check">중복확인</button>
+                         <p id="success_s">사용가능합니다.</p>
+                         <p id="failed">중복된 이메일입니다.</p>
+                    </div>
+
+                     <div class="form-group">
+                            <label for="name">닉네임</label>
+                            <input type="text" class="form-control" id="kickname" name="name" style="width: 210px"/>
+                     </div>
+
+                    <div class="form-group">
+                        <label for="pwd">패스워드</label>
+                        <input class="form-control" name="pwd" id ="pwd" maxlength="15" type="password" style="width: 210px"/>
+                    </div>
+
+                     <div class="form-group">
+                        <label for="check_pwd">재확인</label>
+                        <input class="form-control" name="check_pwd" id="check_pwd" maxlength="15" type="password" style="width: 210px"/>
+
+                        <div class="alert alert-success" id="alert-success" style="width: 210px">비밀번호가 일치합니다.</div>
+                        <div class="alert alert-danger" id="alert-danger" style="width: 210px">비밀번호가 일치하지 않습니다.</div>
+
+                     </div>
+
+
+                     <div class="form-group">
+                        <label for="Authentication">인증문자</label>
+                        <input class="form-control" name="Authentication" id = "authent" maxlength="8" type="text" style="width: 210px"/>
+
+                         <div class="alert alert-success" id="success" style="width: 210px">일치합니다.</div>
+                         <div class="alert alert-danger" id="danger" style="width: 210px">일치하지 않습니다.</div>
+
+                         <button type="button" class="save btn btn-success" id="btn">메일 발송</button>
+
+                     </div>
+
+                    <input type="submit" class="save btn btn-success" value="가입">
+
+                </form>
+
+		</div>
+            	</div>
+    </div>
+
+
+</body>
+</html>
+
+
+
+

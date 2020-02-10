@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+    <script src="https://unpkg.com/vue"></script>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+</head>
+<body>
+
+
+    <nav class="navbar navbar-default">
+      <div class="container-fluid"/>
+            <a class="navbar-brand" href="#">
+            <img alt="Brand" src="...">
+          </a>
+        <ul class="nav navbar-nav navbar-right">
+        {% if request.session.uid %}
+                <ul><a >{{request.session.name}}님.</a></ul>
+
+                 <ul><a href= "{% url 'logout'%}">로그아웃</a></ul>
+        {% endif %}
+        </ul>
+    </nav>
+
+
+    <div class="container">
+		<div class="col-lg-4 "></div>
+		<div class="col-lg-4">
+			<div class="jumbotron jumbotron-fluid" style="padding-top: 50px">
+
+                <form method="post" action="" class="sign-up-form">
+                  {%csrf_token%}
+                     <div class="form-group">
+                        <label >프리미어 리그</label>
+                        <input class="form-control" id="user_date" maxlength="15"
+                               name="user_date" type="text" placeholder="#리버풀 FC" />
+                    </div>
+
+                    <input type="submit" class="save btn btn-success" value="검색">
+
+                </form>
+
+		</div>
+            	</div>
+    </div>
+
+
+
+    <div class="col-lg-4 "></div>
+		    <div class="col-lg-4">
+                 <a href="{% url 'start_scheduler' %}" >시작</a>
+                 <a href="{% url 'shutdown' %}" >중단 </a>
+            <!--
+            <div id="list">
+                <ul v-for="item in items">
+                    <li>{{item.context}}</li>
+                </ul>
+            </div>
+            -->
+                <div class="form-group">
+                        {% if  rank %}
+                        <ul>순위    : {{rank}} </ul>
+                        <ul>팀 이름 : {{team}}</ul>
+                        <ul>승점    : {{scor}}</ul>
+                            {% if reson %}
+                            <ul >현재 : {{reson}}</ul>
+                            {% endif %}
+                        {% else %}
+                                    <ul >{{message}}</ul>
+                        {% endif %}
+                        <br/>
+
+                        {% if person_rank %}
+                            <ul>득점 순위 : {{person_rank}} </ul>
+                            <ul>선수 이름 : {{person_name}} </ul>
+                            <ul>득점     : {{person_score}} </ul>
+
+                        {% endif %}
+
+                         {% if person_name %}
+
+
+
+                                <script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
+                                {%  for i in range %}
+
+                                <canvas id="radar-chart" width="500" height="300"></canvas>
+                                <script>
+                                         new Chart(document.getElementById("radar-chart"), {
+                                                    type: 'radar',
+                                                    data: {
+                                                      labels: ["득점", "도움", "공격포인트", "슈팅", "유효슈팅"],
+                                                      datasets: [
+                                                        {
+                                                          label: "{{person_name}}",
+                                                          fill: true,
+                                                          backgroundColor: "rgba(255,99,132,0.2)",
+                                                          borderColor: "rgba(255,99,132,1)",
+                                                          pointBorderColor: "#fff",
+                                                          pointBackgroundColor: "rgba(255,99,132,1)",
+                                                          pointBorderColor: "#fff",
+                                                          data: [{{person_score}},
+                                                                {{person_asset}},
+                                                                {{person_at_point}},
+                                                                {{person_try_shot}},
+                                                          {{person_correct_shot}}]
+                                                        }
+                                                      ]
+                                                    },
+                                                    options: {
+                                                      title: {
+                                                        display: true,
+                                                        text: ''
+                                                      }
+                                                    }
+                                                });
+                                </script>
+
+                             {% endfor %}
+                {% endif %}
+
+                </div>
+            </div>
+
+
+
+    <script>
+         var model = {
+                    "items" :[
+                               {"context":"Test"},
+                               {"context":"Test1" },
+                               {"context":"Test2" }
+                    ]
+          };
+
+         var List = new Vue({
+                        el : "#list",
+                        data : model
+                        });
+    </script>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+         https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-analytics.js"></script>
+
+</body>
+</html>
+
+
+
+

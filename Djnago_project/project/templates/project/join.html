@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+    <script src="https://unpkg.com/vue"></script>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+</head>
+<body>
+
+
+    <nav class="navbar navbar-default">
+      <div class="container-fluid"/>
+            <a class="navbar-brand" href="#">
+            <img alt="Brand" src="...">
+          </a>
+    </nav>
+
+
+    <div class="container">
+		<div class="col-lg-4 "></div>
+		<div class="col-lg-4">
+			<div class="jumbotron jumbotron-fluid" style="padding-top: 50px">
+
+
+                    <div class="form-group">
+                        <label for="email">이메일</label>
+                        <input class="form-control" id="email" maxlength="120"  type="email" />
+                    </div>
+
+                     <div class="form-group">
+                            <label for="name">닉네임</label>
+                            <input type="text" class="form-control" id="name">
+                     </div>
+
+                    <div class="form-group">
+                        <label for="pwd">패스워드</label>
+                        <input class="form-control" id="pwd" maxlength="120" type="password"/>
+                    </div>
+
+
+                <button type="button" class="save btn btn-success" value="가입">가입</button>
+
+		</div>
+            	</div>
+    </div>
+
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+         https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-analytics.js"></script>
+
+    <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyAVYGthYuizKFn5oErh1AhNknuf0FxlpYI",
+        authDomain: "django-project-669b1.firebaseapp.com",
+        databaseURL: "https://django-project-669b1.firebaseio.com",
+        projectId: "django-project-669b1",
+        storageBucket: "django-project-669b1.appspot.com",
+        messagingSenderId: "1061243052106",
+        appId: "1:1061243052106:web:92b05aff48801546f446b3",
+        measurementId: "G-K2Q7XTB8T9"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      firebaseEmailAuth = firebase.auth()
+      firebaseDatabase = firebase.database()
+      //firebase.analytics();
+
+        var isAdduser = false ;
+            $(document).ready(function(){
+            //가입버튼 눌렀을 때 작동하는 함수
+
+            $(document).on('click','.join',function(){
+            //jquery를 이용해서 입력된 값을 가져온다.
+
+            var email = $('#email').val();
+            var password = $('#pwd').val();
+            var Name = $('#name').val();
+            //이메일로 가입 버튼 눌렀을 때 작동되는 함수 - firebase 인증 모듈
+
+            isAdduser = true ;
+
+            firebaseEmailAuth.createUserWithEmailAndPassword(email, password).catch(function(error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            // [START_EXCLUDE]
+            if (errorCode === 'auth/wrong-password') {
+            alert('Wrong password.');
+            } else {
+            alert(errorMessage);
+            }
+            console.log(error);
+            isAdduser = false ;
+            // document.getElementById('quickstart-sign-in').disabled = false;
+            // [END_EXCLUDE]
+            });
+
+            });});
+
+
+
+
+            /**
+            * initApp handles setting up UI event listeners and registering Firebase auth listeners:
+            * - firebase.auth().onAuthStateChanged: This listener is called when the user is signed in or
+            * out, and that is where we update the UI.
+            */
+            function initApp() {
+            // Listening for auth state changes.
+            // [START authstatelistener]
+            firebase.auth().onAuthStateChanged(function(user) {
+            // [START_EXCLUDE silent]
+            // [END_EXCLUDE]
+            if (user && isAdduser ) {
+            // User is signed in.
+
+            var ref = firebaseDatabase.ref("users/"+ user.uid); //저장될 곳을 users라는 부모 키를 레퍼런스로 지정.
+
+            var Name = $('#name').val();
+
+            //저장 형식
+            var obj = {Name: Name};
+
+            ref.set(obj); // 고유한 자식 키가 하나 생셩이 되면서 json 삽입
+
+            alert("가입성공");
+
+            //window.location.href = "/index.html"
+
+            // [END_EXCLUDE]
+            } else {
+            // User is signed out.
+            // [START_EXCLUDE]
+            // [END_EXCLUDE]
+            }
+            // [START_EXCLUDE silent]
+            // [END_EXCLUDE]
+            });
+            // [END authstatelistener]
+            }
+
+            window.onload = function() {
+            initApp();
+            };
+
+
+    </script>
+
+</body>
+</html>
+
+
+
+

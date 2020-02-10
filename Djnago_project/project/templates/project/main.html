@@ -1,0 +1,31 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script src="https://unpkg.com/vue"></script>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <title>Title</title>
+</head>
+<body>
+
+
+
+    <ul> {% for day in days %} <li><h4> Day {{ day }}</h4></li> {% endfor %} </ul>
+    <div id="app"> [[message]] </div>
+
+    <input v-model="test"   placeholder="ldap id" />
+    <input  v-model="test" placeholder="ldap pw" />
+
+    <script>
+       var app = new Vue({
+            delimiters: ['[[', ']]'],
+            el: "#app",
+            data: {
+                message: "Vueds!"
+            }
+        })
+    </script>
+
+
+</body>
+</html>
