@@ -228,3 +228,6 @@ data = (request.get('localhiost/premier2')).json()
 ===== 프론트와 백엔드을 분리하여 개발 진행.. 하지만 Setting문제 생겨 해결 하고 있습니다. ======
 
 
+2020.02.11 현재 오류
+#### 원인이 뭔지 모르겠습니다.
+![](https://github.com/khk37601/Django/blob/master/Django_%EC%9D%B4%EB%AF%B8%EC%A7%80/Restframework%20%EC%98%A4%EB%A5%98%20%EB%B0%9C%EC%83%9D.PNG)
