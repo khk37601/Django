@@ -14,8 +14,32 @@
             <a class="navbar-brand" href="#">
             <img alt="Brand" src="...">
           </a>
-    </nav>
 
+         <ul class="nav navbar-nav navbar-right">
+         {% if request.session.uid %}
+                <ul><a >{{request.session.name}}님.</a></ul>
+
+                 <ul><a href= "{% url 'logout'%}">로그아웃</a></ul>
+         {% endif %}
+         </ul>
+    </nav>
+    <script>
+
+        // Cache 방지 (2017-10-22)
+
+            if("HTTP/1.1".equals(request.getProtocol())) {
+
+                response.setHeader ("Cache-Control", "no-cache, no-store, must-revalidate");
+
+            } else {
+
+                response.setHeader ("Pragma", "no-cache");
+
+            }
+
+            response.setDateHeader ("Expires", 0);
+
+    </script>
 
     <div class="container">
 		<div class="col-lg-4 "></div>
