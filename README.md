@@ -233,3 +233,50 @@ data = (request.get('localhiost/premier2')).json()
 ![](https://github.com/khk37601/Django/blob/master/Django_%EC%9D%B4%EB%AF%B8%EC%A7%80/Restframework%20%EC%98%A4%EB%A5%98%20%EB%B0%9C%EC%83%9D.PNG)
 
 ##### 문제 해결 하였습니다. ^^
+
+무슨 문제인지 파악이 필요해서 원본 UpdateAPIView의 원본 소스를 봤습니다.
+
+```
+def update(self, request, *args, **kwargs):
+     # kwargs가 삭제할 번호를 가지고 있는 매개변수 입니다.
+     partial = kwargs.pop('partial', False)
+     # 해당 정보를 가져 DB에서 가져옵니다.
+     instance = self.get_object()
+     # 가져오는 값을 직렬화 합니다.
+     serializer = self.get_serializer(instance, data=request.data, partial=partial)
+     serializer.is_valid(raise_exception=True)
+     # 값을 업데이트 합니다.
+     self.perform_update(serializer)
+```
+기존에 구현된 메소드를 쓰면 get_object()에서 아무 값도 못가져오게 되는 문제 가 발생 했던 것 입니다.
+계속해서 이부분에서 에러가 발생하여 아래 처럼 코드를 수정하여서 오류를 수정 하였습니다.
+
+```
+class PremierLeague_update(UpdateAPIView):
+
+
+    queryset = PremierLeague.objects.all()
+    serializer_class = Serial_Premierleague
+
+    def get_object(self, pk):
+        try:
+            return PremierLeague.objects.get(rank=pk)
+        except:
+            raise Http404
+
+
+    def put(self, request, *args, **kwargs):
+
+        return self.update(request, *args, **kwargs)
+
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+
+        ** instance = self.get_object(kwargs['rank'])** # get_object에 key값을 넣어서 어떤거 값을 가져올지 알려줍니다.
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        print(serializer)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        return Response(serializer.data)
+
+```
