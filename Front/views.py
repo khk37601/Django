@@ -15,15 +15,34 @@ class Search(View):
     def post(self, request):
         pass
 
+    # noinspection PyMethodMayBeStatic
     def get(self, request):
-        __url = 'http://127.0.0.1:8000/premier-league-list/{}/'.format(request.GET.get('user_date'))
-        data = (requests.get(__url)).json()
+        word = request.GET.get('user_date')
 
-        return render(request, 'front_html/premier_index.html',{'detail_team': data})
+        if word is None or word == "":
+            return render(request, 'front_html/premier_index.html', {'message': "공백은 노노"})
+
+        try:
+            __url = 'http://127.0.0.1:8000/premier-league-list/{}/'.format(request.GET.get('user_date'))
+            data = (requests.get(__url)).json()
+        except:
+            return render(request, 'front_html/premier_index.html',{'message': "이상한 특수기호 노노"})
+
+
+        return render(request, 'front_html/premier_index.html', {'detail_team': data})
+
+    # noinspection PyMethodMayBeStatic
+    def total_list(request):
+
+        __url = 'http://127.0.0.1:8000'
+        data = (requests.get(__url)).json()
+        return render(request, 'front_html/premier_index.html', {'total_list':data})
 
 
 class PostLogin(View):
 
+    # 로그인 처리.
+    # noinspection PyMethodMayBeStatic
     def post(self, request):
 
         email = request.POST.get('email')
@@ -51,17 +70,20 @@ class PostLogin(View):
 
             return render(request, 'front_html/premier_index.html')
 
+    # noinspection PyMethodMayBeStatic
     def get(self, request):
         return render(request, 'front_html/login.html')
 
+    # 로그아웃 처리.
+    # noinspection PyMethodMayBeStatic
+    def logout(self, request):
+        response = render(request, 'front_html/login.html')
+        auth.logout(request)
+        response.delete_cookie('email')
+        response.delete_cookie('pwd')
 
-# 로그아웃.
-def logout(request):
-    response = render(request, 'front_html/login.html')
-    auth.logout(request)
-    response.delete_cookie('email')
-    response.delete_cookie('pwd')
+        return HttpResponseRedirect(reverse('login'))
 
-    return HttpResponseRedirect(reverse('login'))
+
 
 
