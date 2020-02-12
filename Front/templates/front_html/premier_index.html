@@ -56,10 +56,13 @@
 
                     <input type="submit" class="save btn btn-success" value="검색">
                     <a href="" > 삭제 </a>
+                    <a href="{% url 'total_list' %}" class="save btn btn-success" > 전체리그 순위 </a>
+
                 </form>
 
 
             </div>
+
                     <div lass="form-group">
                         {% if detail_team %}
                         <ul>순위     : {{detail_team.rank}}</ul>
@@ -67,6 +70,34 @@
                         <ul>승점     : {{detail_team.winning}}</ul>
                         {% endif %}
                     </div>
+
+                    {% if total_list %}
+            <div lass="form-group">
+`                   <table class="table">
+                        <thead>
+                            <tr>
+                                <th>순위</th>
+                                <th>팀</th>
+                                <th>승점</th>
+                            </tr>
+                            {% for loop in total_list %}
+                            <tr>
+
+                                <td>{{loop.rank}}</td>
+                                <td>{{loop.team_name}}</td>
+                                <td>{{loop.winning}}</td>
+
+                            </tr>>
+                            {% endfor %}
+                        </thead>
+                    </table>
+             </div>
+
+                    {% endif %}
+
+
+
+
 
         </div>
 
