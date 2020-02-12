@@ -280,3 +280,82 @@ class PremierLeague_update(UpdateAPIView):
         return Response(serializer.data)
 
 ```
+
+##### 파이어베이스
+
+파이어베이스는 웹, 모바일 등의 개발에 필요한 ```Baas(Backend as a Service)```를 제공해주는 서비스입니다.
+
+실시간 데이터베이스, 인증, 클라우드 저장소, 호스팅, 성능 모니터링 등 많인 서비스를 제공해 줍니다.
+
+여기서 저는 인증 서비스를 이용해 로그인 처리를 해볼려고 합니다.
+
+인증 서비스는  이메일/비밀번호, 타사 제공업체(Facebook 등), 기존 계정 시스템 직접 사용 등의 다양한 인증 방법을 제공하는 서비스 입니다. 
+
+
+pyrebase 설치
+
+```
+>> pip install pyrebase 
+
+# 이렇게 설치하면 setup.py 에서 UnicodeDecodeError 'cp949' codec can't decode 오류가 발생 하게 됩니다.
+
+```
+##### 왜 이러한 에러가 발생하는 것일 까요?
+
+이 문제를 발생시킨 setup.py을 들려다 보겠습니다.
+
+* setup.py
+```
+# 여기서 오류가 발생하는 지점입니다.
+def read(fname):
+    return open(os.path.join(os.path.dirname(__file__), fname)).read()
+
+setup(
+    name = "jws",
+    version = "0.1.3",
+    author = "Brian J Brennan",
+    author_email = "brianloveswords@gmail.com",
+    description = ("JSON Web Signatures implementation in Python"),
+    license = "MIT",
+    keywords = "jws json web security signing",
+    url = "http://github.com/brianloveswords/python-jws",
+    packages=['jws'],
+    long_description=read('README.md'),
+    classifiers=[
+        "Development Status :: 3 - Alpha",
+        "Topic :: Utilities",
+        "License :: OSI Approved :: MIT License",
+    ],
+    test_suite = 'nose.collector',
+)
+```
+UnicodeDecodeError 'cp949' codec can't decode 오류는
+Setup.py에서 read 함수에서 open 한 파일은 cp949로 인코딩 할 수 없는 내용이 존재하기 때문에 문제가 발생하게 되는 것입니다.
+
+오류를 해결하기 위해서는 open 함수에 인코딩을 ``utf-8```로 하겠다고 명시적으로 알려주면 오류는 간단하게 해결이 됩니다.
+
+```
+ >> return open(os.path.join(os.path.dirname(__file__), fname)).read() #이전
+ >>  return open(os.path.join(os.path.dirname(__file__), fname), encoding="UTF-8").read() # 수정.
+                  
+```
+
+###### pyrebase 설치.
+```
+>> pip  download jws
+
+# jws.tar.gz 파일 생성 -> jws.tar.gz 압축을 풀고 setup.py파일을 위에 내용처럼 수정 합니다.
+
+>> pip install pyrebase # 설치 성공 
+
+* 참고로 pyrebase는 파이어베이스를 쉽게 사용하기 위해서 만든 소스로 오픈소스 파이썬으로 구성되어 있습니다.
+(https://github.com/thisbejim/Pyrebase 소스를 분석하고 싶은 분들은 참고하세요.)
+
+```
+
+
+
+
+
+
+
