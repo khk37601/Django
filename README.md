@@ -353,6 +353,69 @@ Setup.py에서 read 함수에서 open 한 파일은 cp949로 인코딩 할 수 �
 
 ```
 
+그러면 파이어베이스를 사용해보겠습니다.
+저는 firabse_setting.py에  파이에베이스를 설정코드를 작성해봤습니다.
+![](https://github.com/khk37601/Django/blob/master/Django_%EC%9D%B4%EB%AF%B8%EC%A7%80/%ED%8C%8C%EC%9D%B4%EC%96%B4%EB%B2%A0%EC%9D%B4%EC%8A%A4%20%EB%94%94%EB%A0%89%ED%86%A0%EB%A6%AC.PNG)
+
+```
+# firebase_setting.py
+
+import pyrebase
+
+class FirebaseSetting():
+
+    def __int__(self):
+        pass
+
+    def get_firbase_auth(self):
+        config = {
+                  "본인 설정내용 입력."
+        }
+        
+        firbase = pyrebase.initialize_app(config)
+        f_auth = firbase.auth()
+        # 데이터 베이스 생성.
+        database = firbase.database()
+
+        return f_auth
+
+# viwe.py
+      
+ try:
+         # 
+        f_auth = FirebaseSetting().get_firbase_auth()
+        
+        # 로그인 확인.
+        user = f_auth.sign_in_with_email_and_password(email, pwd)
+ except Exception as e:
+        print(e)
+       return render(request, 'front_html/login.html', {'message': message})
+ else:
+      # 정상적인 로그인이 이루어지면 해당 아이디에 토큰이 발행이 됩니다. 
+      # 토큰 저장.
+      session_id = user['idToken']
+      # 그 토큰 값을 Django session에 저장 시킵니다.
+      # 세션저장.
+       request.session['uid'] = str(session_id)
+       request.session['email'] = email
+
+       return render(request, 'front_html/premier_index.html')
+
+
+# 위에 같은 간단한 코드로 파이어베이스 인증 서비스를 이용할 수 있게 됩니다.
+
+# 이메일 로그인방법 허용 방법.
+
+      Authentication >> 로그인 방법 >> 이메일/비밀번호 >> 사용설정
+
+
+# 파이어베이스 설정값 찾는방법.
+
+      설정(톱니바퀴) >> 프로젝트 설정 -> 하단 -> 내앱 >> Firebase SDK snippet 
+
+```
+
+~~개인적인 생각으로 규모가 작은 스타트업이나 소기업에 부담없이 사용하기 좋은 서비스 인거같습니다.
 
 
 
