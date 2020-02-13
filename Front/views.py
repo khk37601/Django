@@ -6,9 +6,29 @@ from .firabse.firabase_setting.firabase_settings import FirebaseSetting
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
+
 # Create your views here.
 def index(request):
    return render(request, 'front_html/premier_index.html')
+
+
+def validation(*args, func="None"):
+
+    length = len(args)
+
+    if args is None:
+        return True
+
+    if length == 1:
+        if args[0] is None or not args[0]:
+            return True
+
+    elif length == 2:
+        if (args[0] is None or not args[0] ) or (args[1] is None or not args[1]):
+                return True
+    elif length == 3:
+        if (args[0] is None or not args[0]) or (args[1] is None or not args[1]) or(args[2] is None or not args[2]):
+                return True
 
 
 class Search(View):
@@ -19,7 +39,8 @@ class Search(View):
     def get(self, request):
         word = request.GET.get('user_date')
 
-        if word is None or word == "":
+        # if word is None or word == "":
+        if validation(word):
             return render(request, 'front_html/premier_index.html', {'message': "공백은 노노"})
 
         try:
@@ -28,7 +49,6 @@ class Search(View):
         except:
             return render(request, 'front_html/premier_index.html',{'message': "이상한 특수기호 노노"})
 
-
         return render(request, 'front_html/premier_index.html', {'detail_team': data})
 
     # noinspection PyMethodMayBeStatic
@@ -36,8 +56,37 @@ class Search(View):
 
         __url = 'http://127.0.0.1:8000'
         data = (requests.get(__url)).json()
-        return render(request, 'front_html/premier_index.html', {'total_list':data})
+        return render(request, 'front_html/premier_index.html', {'total_list': data})
 
+
+class AdminPage(View):
+
+    # noinspection PyMethodMayBeStatic
+    def get(self, request):
+
+            team_name = request.GET.get('user_date')
+            rank = request.GET.get('user_rank')
+            winning = request.GET.get('user_winning')
+
+            if validation(team_name, rank, winning):
+                return render(request, 'front_html/insert-page.html', {'message': "공백은 노노"})
+
+            else:
+                data = {
+                    'rank' : rank,
+                    'team_name' : team_name,
+                    'winning' :  winning
+                }
+                try:
+                    requests.post('http://127.0.0.1:8000/premier-league-list/', data)
+                    return render(request,'front_html/insert-page.html', {'data': data})
+
+                except:
+                    return
+
+    # noinspection PyMethodMayBeStatic
+    def post(self, request):
+        return render(request, 'front_html/insert-page.html')
 
 class PostLogin(View):
 
@@ -50,7 +99,8 @@ class PostLogin(View):
         message = "빈칸을 입력하지 마세요."
 
         # 빈칸 체크.
-        if (email is None or pwd is None) or email == "" or pwd == "":
+        # if (email is None or pwd is None) or email == "" or pwd == "":
+        if validation(email, pwd):
             return render(request, 'front_html/login.html', {'message': message})
 
         try:
@@ -83,7 +133,3 @@ class PostLogin(View):
         response.delete_cookie('pwd')
 
         return HttpResponseRedirect(reverse('login'))
-
-
-
-
